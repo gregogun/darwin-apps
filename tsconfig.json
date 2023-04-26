@@ -1,0 +1,25 @@
+// {
+//     "compilerOptions": {
+//         "rootDir": "src",
+//         "outDir": "dist",
+//         "strict": true,
+//         "target": "es6",
+//         "module": "commonjs",
+//         "sourceMap": true,
+//         "esModuleInterop": true,
+//         "moduleResolution": "node",
+//     }
+// }
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es6",
+      "moduleResolution": "node",
+      "outDir": "dist",
+      "noImplicitAny": false,
+      "strict": true
+    },
+    "include": ["src/**/*"]
+  }
+  

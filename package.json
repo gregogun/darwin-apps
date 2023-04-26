@@ -1,0 +1,35 @@
+{
+  "name": "evoapps-test-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/cli.js",
+  "bin": {
+    "evoapps-test-cli": "./dist/cli.js"
+  },
+  "scripts": {
+    "start": "ts-node src/cli.ts",
+    "cli": "node dist/cli.js",
+    "build": "pnpm clean-build && tsc --skipLibCheck -p .",
+    "clean-build": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@bundlr-network/client": "0.9.11",
+    "@permaweb/asset-sdk": "https://arweave.net/6EufX9daGYA6tqv1WK900FQLy0JHta2PdMIutTh3t4g",
+    "arweave": "1.11.8",
+    "chalk": "4.1.2",
+    "commander": "10.0.1",
+    "enquirer": "2.3.6",
+    "figlet": "1.6.0",
+    "mime-types": "2.1.35",
+    "ora": "5.4.0",
+    "warp-contracts": "1.2.39"
+  },
+  "devDependencies": {
+    "@types/figlet": "1.5.5",
+    "@types/node": "18.16.0",
+    "ts-node": "10.9.1",
+    "typescript": "4.7.4"
+  }
+}
