@@ -4,7 +4,7 @@ export interface Args {
     description: string
     groupId?: string
     topics: string
-    balances: number
+    balance: number
     forks?: string
     ['release-notes']?: string
     wallet: string
