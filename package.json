@@ -2,14 +2,17 @@
   "name": "evoapps-test-cli",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/cli.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "bin": {
-    "evoapps-test-cli": "./dist/cli.js"
+    "evoapps-test-cli": "./dist/index.js"
   },
   "scripts": {
     "start": "ts-node src/cli.ts",
-    "cli": "node dist/cli.js",
-    "build": "pnpm clean-build && tsc --skipLibCheck -p .",
+    "cli": "node dist/index.js",
+    "build": "pnpm clean-build && tsup index.ts --format cjs,esm --dts",
+    "lint": "tsc",
     "clean-build": "rm -rf dist",
     "prepublishOnly": "npm run build"
   },
@@ -24,12 +27,15 @@
     "figlet": "1.6.0",
     "mime-types": "2.1.35",
     "ora": "5.4.0",
+    "validator": "13.9.0",
     "warp-contracts": "1.2.39"
   },
   "devDependencies": {
+    "@changesets/cli": "2.26.1",
     "@types/figlet": "1.5.5",
     "@types/node": "18.16.0",
     "ts-node": "10.9.1",
+    "tsup": "6.7.0",
     "typescript": "4.7.4"
   }
 }
