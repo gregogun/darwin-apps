@@ -1,6 +1,6 @@
 import AssetSDK from "@permaweb/asset-sdk";
 import Bundlr from "@bundlr-network/client";
-import fs from "fs";
+import fs, { readFileSync } from "fs";
 import { Args, Balances, Manifest } from "../types";
 import { arweave, warp } from "./arweave";
 import { jwkToAddress } from "../utils";
@@ -42,6 +42,8 @@ export const createAsset = async (
   );
 
   const SDK = AssetSDK.init({ arweave, bundlr, warp, wallet: jwk });
+
+  const releaseNotesContent = readFileSync(releaseNotes as string, "utf-8");
 
   const formattedBalances = await jwkToAddress(wallet).then((address) => {
     return {
@@ -86,7 +88,7 @@ export const createAsset = async (
     balances: newBalances || formattedBalances,
     forks: forks || "",
     data: JSON.stringify(manifest),
-    meta: releaseNotes || "",
+    meta: releaseNotesContent.toString() || "",
     contentType: "application/x.arweave-manifest+json",
   });
 
