@@ -12,6 +12,7 @@
     "release": "pnpm changeset publish"
   },
   "dependencies": {
-    "@changesets/cli": "2.26.1"
+    "@changesets/cli": "2.26.1",
+    "turbo": "1.4.7"
   }
 }
