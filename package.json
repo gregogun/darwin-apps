@@ -2,6 +2,10 @@
   "name": "evoapps-test-cli",
   "private": true,
   "version": "0.0.1",
+  "packageManager": "pnpm@7.18.2",
+  "engines": {
+    "pnpm": "<=7"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
