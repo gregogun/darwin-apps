@@ -1,0 +1,22 @@
+{
+  "name": "evolutionary-app-wrapper",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "pnpm clean-build && vite build",
+    "clean-build": "rm -rf dist",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@permaweb/asset-graph": "https://arweave.net/-jYaU7HYX3JNpsOTqkMzEKUK4_5Mfy-a88jtgSNrI_k",
+    "@permaweb/stampjs": "0.0.15",
+    "warp-contracts": "1.2.39"
+  },
+  "devDependencies": {
+    "vite": "^4.3.2"
+  },
+  "homepage": "."
+}

@@ -1,0 +1,64 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: hsl(200, 7%, 8.8%);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+/* .path{
+  stroke-dasharray: 80;
+  animation: dash 2s cubic-bezier(.25,.25,.39,1) infinite;
+  stroke-linecap: round;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 40;
+  }
+  
+  100% {
+    stroke-dasharray: 80;
+    stroke-dashoffset: -160px;
+  }
+ */
+/*-----------------*/
+
+.path {
+  animation: dash 1.75s linear infinite;
+  stroke-linecap: round;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 0, 158;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 79, 158;
+    stroke-dashoffset: -30px;
+  }
+  100% {
+    stroke-dasharray: 0, 158;
+    stroke-dashoffset: -158px;
+  }
+}

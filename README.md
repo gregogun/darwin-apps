@@ -1,3 +1,3 @@
 # Evolutionary Apps CLI
 
-A CLI for Evolutionary Web Apps.
+A CLI tool for creating Evolutionary Apps.
