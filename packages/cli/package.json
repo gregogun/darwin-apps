@@ -13,6 +13,7 @@
     "cli": "node dist/index.js",
     "build": "pnpm clean-build && tsup index.ts --format cjs,esm --dts",
     "lint": "tsc",
+    "clean": "pnpm clean-build && rm -rf node_modules .turbo",
     "clean-build": "rm -rf dist",
     "prepublishOnly": "npm run build"
   },
@@ -27,6 +28,7 @@
     "figlet": "1.6.0",
     "mime-types": "2.1.35",
     "ora": "5.4.0",
+    "test-asset-sdk": "0.0.30",
     "validator": "13.9.0",
     "warp-contracts": "1.2.39"
   },

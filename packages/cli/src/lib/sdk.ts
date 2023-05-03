@@ -1,49 +1,37 @@
-import AssetSDK from "@permaweb/asset-sdk";
-import Bundlr from "@bundlr-network/client";
-import fs, { readFileSync } from "fs";
-import { Args, Balances, Manifest } from "../types";
-import { arweave, warp } from "./arweave";
-import { jwkToAddress } from "../utils";
-import { Contract } from "warp-contracts";
-import ora, { Ora } from "ora";
+// import AssetSDK from '@permaweb/asset-sdk';
+import AssetSDK from 'test-asset-sdk';
+import Bundlr from '@bundlr-network/client';
+import fs from 'fs';
+import { Args, Balances, Manifest } from '../types';
+import { arweave, warp } from './arweave';
+import { jwkToAddress } from '../utils';
+import { Contract } from 'warp-contracts';
+import ora, { Ora } from 'ora';
 
-export const getAsset = async ({ id, wallet }: Pick<Args, "id" | "wallet">) => {
-  const jwk = JSON.parse(fs.readFileSync(wallet, "utf-8"));
-  const bundlr = new Bundlr("https://node2.bundlr.network", "arweave", jwk);
+export const getAsset = async ({ id, wallet }: Pick<Args, 'id' | 'wallet'>) => {
+  const jwk = JSON.parse(fs.readFileSync(wallet, 'utf-8'));
+  const bundlr = new Bundlr('https://node2.bundlr.network', 'arweave', jwk);
 
   const SDK = AssetSDK.init({ arweave, bundlr, warp, wallet: jwk });
 
-  const result = await SDK.get(id, "app");
+  const result = await SDK.get(id, 'app');
 
   return result;
 };
 
 export const createAsset = async (
-  {
-    groupId,
-    title,
-    description,
-    topics,
-    forks,
-    wallet,
-    balance,
-    releaseNotes,
-  }: Args,
+  { groupId, title, description, topics, forks, wallet, balance, releaseNotes }: Args,
   manifest: Manifest,
   parentId: string | undefined,
   host: string | undefined,
   debug: boolean
 ) => {
-  const jwk = JSON.parse(fs.readFileSync(wallet, "utf-8"));
-  const bundlr = new Bundlr(
-    host ? host : "https://node2.bundlr.network",
-    "arweave",
-    jwk
-  );
+  const jwk = JSON.parse(fs.readFileSync(wallet, 'utf-8'));
+  const bundlr = new Bundlr(host ? host : 'https://node2.bundlr.network', 'arweave', jwk);
 
   const SDK = AssetSDK.init({ arweave, bundlr, warp, wallet: jwk });
 
-  const releaseNotesContent = readFileSync(releaseNotes as string, "utf-8");
+  // const releaseNotesContent = readFileSync(releaseNotes as string, 'utf-8');
 
   const formattedBalances = await jwkToAddress(wallet).then((address) => {
     return {
@@ -75,21 +63,21 @@ export const createAsset = async (
   }
 
   // consider moving to format function of prompt then run only if topic is string (user input)
-  const formattedTopics = topics
-    .split(/[ ,]+/)
-    .filter((element) => element !== "");
+  const formattedTopics = topics.split(/[ ,]+/).filter((element) => element !== '');
 
   const result = await SDK.create({
-    groupId: groupId || "",
-    type: "app",
+    groupId: groupId || '',
+    type: 'app',
     title,
     description,
     topics: formattedTopics,
     balances: newBalances || formattedBalances,
-    forks: forks || "",
+    forks: forks || '',
     data: JSON.stringify(manifest),
-    meta: releaseNotesContent.toString() || "",
-    contentType: "application/x.arweave-manifest+json",
+    meta: releaseNotes || '',
+    contentType: 'application/x.arweave-manifest+json',
+    // replace hard coded values with programmatic values
+    customTags: [{ name: 'Source-Code', value: 'w4Lbg7eB95xdPkwmHtqiT5FnrwhkgINf4FoHTIuUFeU' }],
   });
 
   return result;
