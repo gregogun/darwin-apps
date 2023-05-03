@@ -21,6 +21,7 @@
   "dependencies": {
     "@bundlr-network/client": "0.9.11",
     "@permaweb/asset-sdk": "https://arweave.net/6EufX9daGYA6tqv1WK900FQLy0JHta2PdMIutTh3t4g",
+    "adm-zip": "0.5.10",
     "arweave": "1.11.8",
     "chalk": "4.1.2",
     "commander": "10.0.1",

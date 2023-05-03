@@ -20,7 +20,7 @@ export const getAsset = async ({ id, wallet }: Pick<Args, 'id' | 'wallet'>) => {
 };
 
 export const createAsset = async (
-  { groupId, title, description, topics, forks, wallet, balance, releaseNotes }: Args,
+  { groupId, title, description, topics, forks, wallet, balance, releaseNotes, sourceCode }: Args,
   manifest: Manifest,
   parentId: string | undefined,
   host: string | undefined,
@@ -77,7 +77,7 @@ export const createAsset = async (
     meta: releaseNotes || '',
     contentType: 'application/x.arweave-manifest+json',
     // replace hard coded values with programmatic values
-    customTags: [{ name: 'Source-Code', value: 'w4Lbg7eB95xdPkwmHtqiT5FnrwhkgINf4FoHTIuUFeU' }],
+    customTags: [{ name: 'Source-Code', value: sourceCode }],
   });
 
   return result;

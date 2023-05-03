@@ -7,6 +7,7 @@ import { createAsset, getAsset } from './lib/sdk';
 import { Args, Manifest } from './types';
 import { confirmation, print } from './utils';
 import { createManifest } from './modules/createManifest';
+import { deploySourceCode } from './modules/deploySourceCode';
 
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 const pkgVersion = pkg.version;
@@ -25,13 +26,14 @@ program
   .option('-d, --description <string>', `Description of your app (Max. 300 characters)`)
   .option('-f, --forks <string>', 'Transaction ID of the app that is being forked')
   .option('-b, --balance <number>', 'Number of tokens you wish to mint for your work')
+  .option('-s, --source-code <string>', 'Transaction ID of the source code for your app')
   .option(
     '-i, --index-file <string>',
     `Name of the file to use as an index for manifests (relative to the folder path provided)`
   )
   .option('--release-notes <string>', 'Path to release notes')
   .option('--no-confirmation', 'Skip confirmation step for certain actions')
-  .option('--no-optional', 'Skip prompts for optional fields')
+  .option('--skip-optional', 'Skip prompts for optional fields')
   .option(
     '--groupId <string>',
     'Set a unique identifier for your app (Only applies to base versions.)'
@@ -113,6 +115,12 @@ program
           }
           break;
         case 'forks':
+          if (options.forks.length !== 43) {
+            print.warn('• "forks" Must be a Transaction ID (43 characters).');
+            options.forks = null;
+          }
+          break;
+        case 'sourceCode':
           if (options.forks.length !== 43) {
             print.warn('• "forks" Must be a Transaction ID (43 characters).');
             options.forks = null;
@@ -285,21 +293,20 @@ program
       });
     }
 
-    if (!options.host && !options.noOptional) {
+    if (!options.host && !options.skipOptional) {
       await prompt([
         {
           name: 'host',
           message: 'Choose a preferred host for bundlr',
           type: 'select',
           choices: ['https://node1.bundlr.network', 'https://node2.bundlr.network'],
-          required: true,
         },
       ]).then((answers: any) => {
         options.host = answers.host;
       });
     }
 
-    if (!options.index && !options.noOptional) {
+    if (!options.index && !options.skipOptional) {
       await prompt([
         {
           name: 'index',
@@ -310,6 +317,43 @@ program
       ]).then((answers: any) => {
         options.index = answers.index;
       });
+    }
+
+    // deploy source code if no id given
+    if (!options.sourceCode) {
+      const confirmSource = await confirmation(
+        'Do you have a Transaction ID for your source code?'
+      );
+
+      if (confirmSource) {
+        await prompt([
+          {
+            name: 'sourceCode',
+            message: 'Provide a transaction ID for your app source code',
+            type: 'input',
+            validate: (value: string) => {
+              if (value.length !== 43) {
+                return 'Transaction ID must be 43 characters.';
+              }
+              return true;
+            },
+          },
+        ]).then((answers: any) => {
+          options.sourceCode = answers.sourceCode;
+        });
+      } else {
+        try {
+          const sourceId = await deploySourceCode(options.wallet, options.host, options.debug);
+          options.sourceCode = sourceId;
+          console.log(options.sourceCode);
+        } catch (error) {
+          if (error instanceof Error) {
+            print.error(options.debug ? error.stack : error.message);
+          } else {
+            print.error(error as any);
+          }
+        }
+      }
     }
 
     // create manifest (include step to ask if user already has manifest file/config)
@@ -384,6 +428,7 @@ program
     }
 
     const requiredOps = options;
+    // delete default ops from commander so we can pass into createAsset function
     delete requiredOps.confirmation;
     delete requiredOps.optional;
 
@@ -435,6 +480,7 @@ program
             wallet: options.wallet,
             balance: options.balance,
             releaseNotes: options.releaseNotes,
+            sourceCode: options.sourceCode,
           },
           manifest,
           options.forks,
