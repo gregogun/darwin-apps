@@ -319,7 +319,7 @@ program
       });
     }
 
-    // deploy source code if no id given
+    // prompt and deploy source code if no id given
     if (!options.sourceCode) {
       const confirmSource = await confirmation(
         'Do you have a Transaction ID for your source code?'
@@ -345,7 +345,6 @@ program
         try {
           const sourceId = await deploySourceCode(options.wallet, options.host, options.debug);
           options.sourceCode = sourceId;
-          console.log(options.sourceCode);
         } catch (error) {
           if (error instanceof Error) {
             print.error(options.debug ? error.stack : error.message);
@@ -556,9 +555,9 @@ program
       const res = await getAsset({ id, wallet: requiredArgs.wallet });
       if (options.debug) {
         spinner.succeed(`App found with following info:`);
-        console.log(res);
+        print.log(res);
       } else {
-        console.log(res);
+        print.log(res);
       }
     } catch (error: any) {
       if (options.debug) {

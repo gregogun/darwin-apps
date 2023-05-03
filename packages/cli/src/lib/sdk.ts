@@ -31,8 +31,6 @@ export const createAsset = async (
 
   const SDK = AssetSDK.init({ arweave, bundlr, warp, wallet: jwk });
 
-  // const releaseNotesContent = readFileSync(releaseNotes as string, 'utf-8');
-
   const formattedBalances = await jwkToAddress(wallet).then((address) => {
     return {
       [address]: Number(balance),
@@ -76,7 +74,6 @@ export const createAsset = async (
     data: JSON.stringify(manifest),
     meta: releaseNotes || '',
     contentType: 'application/x.arweave-manifest+json',
-    // replace hard coded values with programmatic values
     customTags: [{ name: 'Source-Code', value: sourceCode }],
   });
 
