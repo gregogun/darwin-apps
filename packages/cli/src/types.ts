@@ -7,6 +7,7 @@ export interface Args {
   balance: number;
   forks?: string;
   releaseNotes?: string;
+  sourceCode: string;
   wallet: string;
   directory?: string;
   debug?: boolean;

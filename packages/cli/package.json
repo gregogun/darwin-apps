@@ -13,6 +13,7 @@
     "cli": "node dist/index.js",
     "build": "pnpm clean-build && tsup index.ts --format cjs,esm --dts",
     "lint": "tsc",
+    "clean": "pnpm clean-build && rm -rf node_modules .turbo",
     "clean-build": "rm -rf dist",
     "prepublishOnly": "npm run build"
   },
@@ -20,6 +21,7 @@
   "dependencies": {
     "@bundlr-network/client": "0.9.11",
     "@permaweb/asset-sdk": "https://arweave.net/6EufX9daGYA6tqv1WK900FQLy0JHta2PdMIutTh3t4g",
+    "adm-zip": "0.5.10",
     "arweave": "1.11.8",
     "chalk": "4.1.2",
     "commander": "10.0.1",
@@ -27,6 +29,7 @@
     "figlet": "1.6.0",
     "mime-types": "2.1.35",
     "ora": "5.4.0",
+    "test-asset-sdk": "0.0.30",
     "validator": "13.9.0",
     "warp-contracts": "1.2.39"
   },
