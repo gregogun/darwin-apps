@@ -6,7 +6,7 @@ import { Args, Balances, Manifest } from '../types';
 import { arweave, warp } from './arweave';
 import { jwkToAddress } from '../utils';
 import { Contract } from 'warp-contracts';
-import ora, { Ora } from 'ora';
+import { Ora } from 'ora';
 
 export const getAsset = async ({ id, wallet }: Pick<Args, 'id' | 'wallet'>) => {
   const jwk = JSON.parse(fs.readFileSync(wallet, 'utf-8'));
@@ -24,7 +24,8 @@ export const createAsset = async (
   manifest: Manifest,
   parentId: string | undefined,
   host: string | undefined,
-  debug: boolean
+  debug: boolean,
+  spinner: Ora
 ) => {
   const jwk = JSON.parse(fs.readFileSync(wallet, 'utf-8'));
   const bundlr = new Bundlr(host ? host : 'https://node2.bundlr.network', 'arweave', jwk);
@@ -41,10 +42,8 @@ export const createAsset = async (
 
   if (parentId) {
     // run spinner if debug true
-    let spinner: Ora = ora();
     try {
       if (debug) {
-        spinner.start();
         spinner.text = `Fetching previous balances...`;
       }
       const prevBalances = await getPrevBalances(parentId);

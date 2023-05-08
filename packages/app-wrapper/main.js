@@ -15,17 +15,16 @@ let txid;
 async function calculateStamps(txid) {
   // use txid in getGraph function to get all versions
   const res = await graph('fmUsilSMxoVFWqsjBySYFHKksOrp25lRFmzerWx8EQY');
-  console.log(res);
+  console.log('res', res);
 
   // transform to flattened array
   const ids = flattenTree(res);
-  console.log(ids);
-  // could run a vouch check
+  console.log('ids', ids);
   // pass array of tx's to stamp function
   const counts = await stamps.counts(ids);
   // calculate most stamped
   const result = getKeyWithHighestVouched(counts);
-  console.log(result);
+  console.log('reult', result);
   location.href = `https://g8way.io/${result}`;
   // append to g8way.io url and use in replaceUrl method
 }
