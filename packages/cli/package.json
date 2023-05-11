@@ -6,7 +6,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "bin": {
-    "evoapps-test-cli": "./dist/index.js"
+    "evoapps": "./dist/index.js"
   },
   "scripts": {
     "start": "ts-node src/cli.ts",
