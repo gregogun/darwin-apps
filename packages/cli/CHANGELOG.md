@@ -1,5 +1,11 @@
 # @evoapps/cli
 
+## 0.0.2
+
+### Patch Changes
+
+- 1e4f71b: Add app wrapper to the deployment flow.
+
 ## 0.0.1
 
 ### Patch Changes
