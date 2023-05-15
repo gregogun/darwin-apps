@@ -1,5 +1,11 @@
 # @evoapps/cli
 
+## 0.0.3
+
+### Patch Changes
+
+- 36f8172: Bump version.
+
 ## 0.0.2
 
 ### Patch Changes
