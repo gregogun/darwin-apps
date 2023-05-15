@@ -8,6 +8,9 @@
   "bin": {
     "evoapps": "./dist/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "ts-node src/cli.ts",
     "cli": "node dist/index.js",
