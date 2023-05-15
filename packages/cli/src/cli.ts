@@ -5,9 +5,10 @@ import ora, { Ora } from 'ora';
 import chalk from 'chalk';
 import { createAsset, getAsset } from './lib/sdk';
 import { Args, Manifest } from './types';
-import { confirmation, print } from './utils';
+import { confirmation, print, sleep } from './utils';
 import { createManifest } from './modules/createManifest';
 import { deploySourceCode } from './modules/deploySourceCode';
+import deployWrapper from './modules/deployWrapper';
 
 const program = new Command();
 
@@ -29,7 +30,7 @@ program
     `Name of the file to use as an index for manifests (relative to the folder path provided)`
   )
   .option('--release-notes <string>', 'Path to release notes')
-  .option('--no-confirmation', 'Skip confirmation step for certain actions')
+  .option('--skip-confirmation', 'Skip confirmation step for certain actions')
   .option('--skip-optional', 'Skip prompts for optional fields')
   .option(
     '--groupId <string>',
@@ -118,7 +119,7 @@ program
           }
           break;
         case 'sourceCode':
-          if (options.forks.length !== 43) {
+          if (options.sourceCode.length !== 43) {
             print.warn('• "forks" Must be a Transaction ID (43 characters).');
             options.forks = null;
           }
@@ -366,6 +367,7 @@ program
 
     const confirmDeploy = await confirmation(
       'Do you already have a manifest file you would like to deploy?'
+      // { skip: options.skipOptional }
     );
 
     if (confirmDeploy) {
@@ -385,12 +387,8 @@ program
         },
       ])
         .then((answer: any) => {
-          try {
-            const manifestFile = readFileSync(answer.manifest, 'utf-8');
-            manifest = JSON.parse(manifestFile.toString());
-          } catch (error) {
-            throw error;
-          }
+          const manifestFile = readFileSync(answer.manifest, 'utf-8');
+          manifest = JSON.parse(manifestFile.toString());
         })
         .catch((error) => {
           if (error instanceof Error) {
@@ -441,11 +439,15 @@ program
         wallet: options.wallet,
       })
         .then((res) => {
-          spinner.succeed('Forked version found. groupId set.');
+          if (options.debug) {
+            spinner.succeed('Forked version found. groupId set.');
+          }
           options.groupId = res.groupId;
         })
         .catch(() => {
-          spinner.fail(`Error: Unable to find the version you are forking from.`);
+          if (options.debug) {
+            spinner.fail(`Error: Unable to find the version you are forking from.`);
+          }
           fetchErr = true;
         });
       if (fetchErr) {
@@ -454,19 +456,25 @@ program
     }
 
     // confirmation flow
-    const confirmCreate = await confirmation(`
+    const confirmCreate = await confirmation(
+      `
     Would you like to confirm the following changes?: 
     \n ${chalk.blue(JSON.stringify(requiredOps, null, 2))}
-    `);
+    `,
+      {
+        skip: options.skipConfirmation,
+      }
+    );
 
     let createErr = false;
 
     if (confirmCreate) {
       let spinner: Ora = ora();
+      let wrapperSpinner = ora();
       try {
         spinner.start();
         spinner.text = 'Deploying your app...';
-        const res = await createAsset(
+        await createAsset(
           {
             groupId: options.groupId,
             title: options.title,
@@ -481,13 +489,45 @@ program
           manifest,
           options.forks,
           options.host,
-          options.debug
-        );
-        spinner.succeed(
-          chalk.green(
-            `You've successfully deployed your app! 🚀 Transaction ID: ${res.id}\n Deployed at: https://g8way.io/${res.id}`
-          )
-        );
+          options.debug,
+          spinner
+        )
+          .then(async (res) => {
+            if (!spinner.isSpinning) {
+              spinner.start();
+            }
+            spinner.succeed(
+              chalk.green(
+                `You've successfully deployed your evolutionary app! 🚀 Transaction ID: ${res.id}`
+              )
+            );
+            print.log(`Visit your deployment at: https://g8way.io/${res.id}`);
+
+            if (type === 'base') {
+              wrapperSpinner.start();
+              wrapperSpinner.text = 'Deploying app wrapper...';
+              await deployWrapper(res.id, options.wallet, options.host, options.debug)
+                .then((wrapperId) => {
+                  wrapperSpinner.start();
+                  wrapperSpinner.succeed(
+                    chalk.green(
+                      `App wrapper successfully deployed at https://g8way.io/${wrapperId}`
+                    )
+                  );
+                })
+                .catch((error) => {
+                  wrapperSpinner.fail();
+                  throw error;
+                });
+            }
+          })
+          .catch((error) => {
+            if (wrapperSpinner.isSpinning) {
+              wrapperSpinner.fail();
+            }
+            createErr = true;
+            throw error;
+          });
       } catch (error: Error | any) {
         if (error instanceof Error) {
           spinner.fail(chalk.red(options.debug ? error.stack : error.message));

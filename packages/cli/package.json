@@ -20,7 +20,9 @@
   "license": "ISC",
   "dependencies": {
     "@bundlr-network/client": "0.9.11",
+    "@permaweb/asset-graph": "https://arweave.net/-jYaU7HYX3JNpsOTqkMzEKUK4_5Mfy-a88jtgSNrI_k",
     "@permaweb/asset-sdk": "https://arweave.net/6EufX9daGYA6tqv1WK900FQLy0JHta2PdMIutTh3t4g",
+    "@permaweb/stampjs": "0.0.15",
     "adm-zip": "0.5.10",
     "arweave": "1.11.8",
     "chalk": "4.1.2",
@@ -31,6 +33,7 @@
     "ora": "5.4.0",
     "test-asset-sdk": "0.0.30",
     "validator": "13.9.0",
+    "vite": "^4.3.2",
     "warp-contracts": "1.2.39"
   },
   "devDependencies": {
