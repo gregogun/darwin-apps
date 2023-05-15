@@ -17,7 +17,7 @@ Please note, you will also need an [Arweave wallet](https://arweave.app/) which 
 To get started with deployment, install the cli tool with the following command:
 
 ```jsx
-npm install -g @evoapps/cli
+npm install -g evoapps-cli
 ```
 
 To confirm installation, you can run the following command:
