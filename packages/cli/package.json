@@ -1,12 +1,12 @@
 {
-  "name": "evoapps-test-cli",
+  "name": "@evoapps/cli",
   "version": "0.0.1",
   "description": "A CLI tool for creating Evolutionary Apps.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "bin": {
-    "evoapps-test-cli": "./dist/index.js"
+    "evoapps": "./dist/index.js"
   },
   "scripts": {
     "start": "ts-node src/cli.ts",

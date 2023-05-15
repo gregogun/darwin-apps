@@ -9,14 +9,11 @@ import { confirmation, print } from './utils';
 import { createManifest } from './modules/createManifest';
 import { deploySourceCode } from './modules/deploySourceCode';
 
-const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-const pkgVersion = pkg.version;
-
 const program = new Command();
 
 program
   .description('A tool for creating and retrieving information about an Evolutionary App')
-  .version(pkgVersion, '-v, --version', 'Gets the current version number of the cli');
+  .version('0.0.1', '-v, --version', 'Gets the current version number of the cli');
 
 program
   .command('create <folder> <type>')
