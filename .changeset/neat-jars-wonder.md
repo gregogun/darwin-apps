@@ -1,5 +1,5 @@
 ---
-"evoapps-test-cli": patch
+'@evoapps/cli': patch
 ---
 
 Create working app deployment flow.
