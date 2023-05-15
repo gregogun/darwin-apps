@@ -14,7 +14,7 @@ const program = new Command();
 
 program
   .description('A tool for creating and retrieving information about an Evolutionary App')
-  .version('0.0.2', '-v, --version', 'Gets the current version number of the cli');
+  .version('0.0.3', '-v, --version', 'Gets the current version number of the cli');
 
 program
   .command('create <folder> <type>')
