@@ -1,6 +1,6 @@
 {
   "name": "@evoapps/cli",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "A CLI tool for creating Evolutionary Apps.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
