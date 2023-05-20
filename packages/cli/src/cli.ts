@@ -14,10 +14,10 @@ const program = new Command();
 
 program
   .description('A tool for creating and retrieving information about an Evolutionary App')
-  .version('0.0.3', '-v, --version', 'Gets the current version number of the cli');
+  .version('0.0.4', '-v, --version', 'Gets the current version number of the cli');
 
 program
-  .command('create <folder> <type>')
+  .command('create <type> <folder>')
   .description('Create an evolutionary app')
   .option('-w, --wallet <string>', 'Path to your keyfile')
   .option('-t, --title <string>', `Title of application (Max. 80 characters)`)
@@ -39,7 +39,7 @@ program
   .option('--host <string>', 'Bundlr node hostname/URL (e.g. http://node2.bundlr.network)')
   .option('--topics <string>', 'A list of comma-seperated topics (e.g. react,todo,warp)')
   .option('--debug', 'Increase verbosity of logs and errors')
-  .action(async (folder: string, type: 'base' | 'fork', options) => {
+  .action(async (type: 'base' | 'fork', folder: string, options) => {
     if (type !== 'base' && type !== 'fork') {
       console.error(chalk.red('Error: You can only specify an application as a base or fork'));
       return;
@@ -62,50 +62,50 @@ program
           try {
             readFileSync(options.wallet, 'utf-8');
           } catch (error: any) {
-            print.warn(`• "wallet" ${error.message}`);
+            print.warn(`• Wallet path must be valid.`);
             options.wallet = null;
           }
           break;
         case 'title':
           if (options.title.length > 80) {
-            print.warn('• "title" Too long. Must be a maximum of 80 characters.');
+            print.warn('• Title is too long. Must be a maximum of 80 characters.');
             options.title = null;
           }
           if (options.title.length < 2) {
-            print.warn('• "title" Too short. Must be at least 2 characters.');
+            print.warn('• Title is too short. Must be at least 2 characters.');
             options.title = null;
           }
           break;
         case 'description':
           if (options.description.length > 300) {
-            print.warn('• Too long. Must be a maximum of 300 characters.');
+            print.warn('• Description is too long. Must be a maximum of 300 characters.');
             options.description = null;
           }
           if (options.description.length < 8) {
-            print.warn('• Too short. Must be at least 8 characters.');
+            print.warn('• Description is too short. Must be at least 8 characters.');
             options.description = null;
           }
           break;
         case 'balance':
           if (isNaN(options.balance)) {
-            print.warn('• "balance" Must be a number');
+            print.warn('• Balance must be a number');
             options.balance = null;
           } else {
             const bal =
               typeof options.balance === 'number' ? options.balance : Number(options.balance);
             if (!Number.isInteger(bal)) {
-              print.warn('• "balance" Balance must be an integer');
+              print.warn('• Balance must be an integer');
               options.balance = null;
             }
           }
           break;
         case 'groupId':
           if (options.groupId.length > 80) {
-            print.warn('• "groupId" Too long. Must be a maximum of 80 characters.');
+            print.warn('• GroupID is too long. Must be a maximum of 80 characters.');
             options.groupId = null;
           }
           if (options.groupId.length < 2) {
-            print.warn('• "groupId" Too short. Must be at least 2 characters.');
+            print.warn('• GroupID is too short. Must be at least 2 characters.');
             options.groupId = null;
           }
           if (options.groupId && type === 'fork') {
@@ -114,13 +114,13 @@ program
           break;
         case 'forks':
           if (options.forks.length !== 43) {
-            print.warn('• "forks" Must be a Transaction ID (43 characters).');
+            print.warn('• Forks must be a Transaction ID (43 characters).');
             options.forks = null;
           }
           break;
         case 'sourceCode':
           if (options.sourceCode.length !== 43) {
-            print.warn('• "forks" Must be a Transaction ID (43 characters).');
+            print.warn('• Forks must be a Transaction ID (43 characters).');
             options.forks = null;
           }
           break;
@@ -129,7 +129,7 @@ program
             options.host !== 'https://node1.bundlr.network' &&
             options.host !== 'https://node2.bundlr.network'
           ) {
-            print.warn('• "host" Must be a valid bundlr node (e.g. https://node2.bundlr.network).');
+            print.warn('• "Host must be a valid bundlr node (e.g. https://node2.bundlr.network).');
             options.host = null;
           }
           break;
@@ -137,7 +137,7 @@ program
           try {
             options.releaseNotes = readFileSync(options.releaseNotes, 'utf-8');
           } catch (error: any) {
-            print.warn(`• "release-notes" ${error.message}`);
+            print.warn(`• Release notes path must be valid.`);
             options.releaseNotes = null;
           }
           break;
@@ -205,7 +205,7 @@ program
       });
     }
 
-    if (!options.groupId && type === 'base') {
+    if (!options.groupId && type === 'base' && !options.skipOptional) {
       await prompt([
         {
           name: 'groupId',
@@ -506,7 +506,13 @@ program
             if (type === 'base') {
               wrapperSpinner.start();
               wrapperSpinner.text = 'Deploying app wrapper...';
-              await deployWrapper(res.id, options.wallet, options.host, options.debug)
+              await deployWrapper(
+                res.id,
+                options.wallet,
+                { title: options.title, description: options.description },
+                options.host,
+                options.debug
+              )
                 .then((wrapperId) => {
                   wrapperSpinner.start();
                   wrapperSpinner.succeed(
