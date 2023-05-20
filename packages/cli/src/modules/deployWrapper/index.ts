@@ -4,7 +4,18 @@ import Bundlr from '@bundlr-network/client';
 import { htmlContent, jsContent, packageJsonContent, viteConfigContent } from './templates';
 import { spawnSync } from 'child_process';
 
-const deployWrapper = async (id: string, wallet: string, host?: string, debug?: boolean) => {
+interface AppInfo {
+  title: string;
+  description: string;
+}
+
+const deployWrapper = async (
+  id: string,
+  wallet: string,
+  appInfo: AppInfo,
+  host?: string,
+  debug?: boolean
+) => {
   if (!id) {
     throw new Error('Asset ID must be provided.');
   }
@@ -57,10 +68,18 @@ const deployWrapper = async (id: string, wallet: string, host?: string, debug?: 
 
     runCommandSync('pnpm build', { cwd: projectPath, debug });
 
+    const tags = [
+      { name: 'Data-Protocol', value: 'Evoapps' },
+      { name: 'Type', value: 'app-wrapper' },
+      { name: 'Title', value: appInfo.title },
+      { name: 'Description', value: appInfo.description },
+    ];
+
     // deploy
     await bundlr
       .uploadFolder(path.join(projectPath, 'dist'), {
         indexFile: 'index.html',
+        manifestTags: tags,
       })
       .then((res) => {
         wrapperId = res?.id;

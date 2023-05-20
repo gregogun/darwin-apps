@@ -25,7 +25,7 @@ importers:
 
   packages/cli:
     specifiers:
-      '@bundlr-network/client': 0.9.11
+      '@bundlr-network/client': 0.11.1
       '@changesets/cli': 2.26.1
       '@permaweb/asset-graph': https://arweave.net/-jYaU7HYX3JNpsOTqkMzEKUK4_5Mfy-a88jtgSNrI_k
       '@permaweb/asset-sdk': https://arweave.net/6EufX9daGYA6tqv1WK900FQLy0JHta2PdMIutTh3t4g
@@ -40,7 +40,7 @@ importers:
       figlet: 1.6.0
       mime-types: 2.1.35
       ora: 5.4.0
-      test-asset-sdk: 0.0.30
+      test-asset-sdk: 0.0.31
       ts-node: 10.9.1
       tsup: 6.7.0
       typescript: 4.7.4
@@ -48,7 +48,7 @@ importers:
       vite: ^4.3.2
       warp-contracts: 1.2.39
     dependencies:
-      '@bundlr-network/client': 0.9.11
+      '@bundlr-network/client': 0.11.1
       '@permaweb/asset-graph': '@arweave.net/-jYaU7HYX3JNpsOTqkMzEKUK4_5Mfy-a88jtgSNrI_k'
       '@permaweb/asset-sdk': '@arweave.net/6EufX9daGYA6tqv1WK900FQLy0JHta2PdMIutTh3t4g'
       '@permaweb/stampjs': 0.0.15
@@ -60,7 +60,7 @@ importers:
       figlet: 1.6.0
       mime-types: 2.1.35
       ora: 5.4.0
-      test-asset-sdk: 0.0.30
+      test-asset-sdk: 0.0.31
       validator: 13.9.0
       vite: 4.3.2_@types+node@18.16.0
       warp-contracts: 1.2.39
@@ -114,6 +114,42 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+
+  /@bundlr-network/client/0.11.1:
+    resolution: {integrity: sha512-nY1kA4F75AvTDqkcM91tMJLJ5hEcLfFVA/Xrj9f88yEbExS241F9ICs5zwLwAXPHiMFxlZqlLd5JZBWYCL7ubQ==}
+    engines: {node: '>=16.10.0'}
+    hasBin: true
+    dependencies:
+      '@near-js/crypto': 0.0.3
+      '@near-js/keystores-browser': 0.0.3
+      '@near-js/providers': 0.0.4
+      '@near-js/transactions': 0.1.1
+      '@solana/web3.js': 1.75.0
+      '@supercharge/promise-pool': 2.4.0
+      algosdk: 1.24.1
+      aptos: 1.3.14
+      arbundles: 0.9.6
+      arweave: 1.11.8
+      async-retry: 1.3.3
+      axios: 0.25.0
+      base64url: 3.0.1
+      bignumber.js: 9.1.1
+      bn.js: 5.2.1
+      bs58: 5.0.0
+      commander: 8.3.0
+      csv: 5.5.3
+      ethers: 5.7.2
+      inquirer: 8.2.5
+      js-sha256: 0.9.0
+      mime-types: 2.1.35
+      near-seed-phrase: 0.2.0
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
 
   /@bundlr-network/client/0.9.11:
     resolution: {integrity: sha512-TVwGwnBaEGZTNLKhkxhx7URvPonaSrCLvEpqLD2qlfvP49ce5fvPS6RLWcm8pEPKf6s6h6Y33IhGl/09FuKUTw==}
@@ -886,8 +922,136 @@ packages:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
+  /@near-js/crypto/0.0.3:
+    resolution: {integrity: sha512-3WC2A1a1cH8Cqrx+0iDjp1ASEEhxN/KHEMENYb0KZH6Hp5bXIY7Akt4quC7JlgJS5ESvEiLa40tS5h0zAhBWGw==}
+    dependencies:
+      '@near-js/types': 0.0.3
+      bn.js: 5.2.1
+      borsh: 0.7.0
+      tweetnacl: 1.0.3
+    dev: false
+
+  /@near-js/crypto/0.0.4:
+    resolution: {integrity: sha512-2mSIVv6mZway1rQvmkktrXAFoUvy7POjrHNH3LekKZCMCs7qMM/23Hz2+APgxZPqoV2kjarSNOEYJjxO7zQ/rQ==}
+    dependencies:
+      '@near-js/types': 0.0.4
+      bn.js: 5.2.1
+      borsh: 0.7.0
+      tweetnacl: 1.0.3
+    dev: false
+
+  /@near-js/keystores-browser/0.0.3:
+    resolution: {integrity: sha512-Ve/JQ1SBxdNk3B49lElJ8Y54AoBY+yOStLvdnUIpe2FBOczzwDCkcnPcMDV0NMwVlHpEnOWICWHbRbAkI5Vs+A==}
+    dependencies:
+      '@near-js/crypto': 0.0.3
+      '@near-js/keystores': 0.0.3
+    dev: false
+
+  /@near-js/keystores/0.0.3:
+    resolution: {integrity: sha512-mnwLYUt4Td8u1I4QE1FBx2d9hMt3ofiriE93FfOluJ4XiqRqVFakFYiHg6pExg5iEkej/sXugBUFeQ4QizUnew==}
+    dependencies:
+      '@near-js/crypto': 0.0.3
+      '@near-js/types': 0.0.3
+    dev: false
+
+  /@near-js/keystores/0.0.4:
+    resolution: {integrity: sha512-+vKafmDpQGrz5py1liot2hYSjPGXwihveeN+BL11aJlLqZnWBgYJUWCXG+uyGjGXZORuy2hzkKK6Hi+lbKOfVA==}
+    dependencies:
+      '@near-js/crypto': 0.0.4
+      '@near-js/types': 0.0.4
+    dev: false
+
+  /@near-js/providers/0.0.4:
+    resolution: {integrity: sha512-g/2pJTYmsIlTW4mGqeRlqDN9pZeN+1E2/wfoMIf3p++boBVxVlaSebtQgawXAf2lkfhb9RqXz5pHqewXIkTBSw==}
+    dependencies:
+      '@near-js/transactions': 0.1.0
+      '@near-js/types': 0.0.3
+      '@near-js/utils': 0.0.3
+      bn.js: 5.2.1
+      borsh: 0.7.0
+      http-errors: 1.8.1
+    optionalDependencies:
+      node-fetch: 2.6.9
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@near-js/signers/0.0.3:
+    resolution: {integrity: sha512-u1R+DDIua5PY1PDFnpVYqdMgQ7c4dyeZsfqMjE7CtgzdqupgTYCXzJjBubqMlAyAx843PoXmLt6CSSKcMm0WUA==}
+    dependencies:
+      '@near-js/crypto': 0.0.3
+      '@near-js/keystores': 0.0.3
+      js-sha256: 0.9.0
+    dev: false
+
+  /@near-js/signers/0.0.4:
+    resolution: {integrity: sha512-xCglo3U/WIGsz/izPGFMegS5Q3PxOHYB8a1E7RtVhNm5QdqTlQldLCm/BuMg2G/u1l1ZZ0wdvkqRTG9joauf3Q==}
+    dependencies:
+      '@near-js/crypto': 0.0.4
+      '@near-js/keystores': 0.0.4
+      js-sha256: 0.9.0
+    dev: false
+
+  /@near-js/transactions/0.1.0:
+    resolution: {integrity: sha512-OrrDFqhX0rtH+6MV3U3iS+zmzcPQI+L4GJi9na4Uf8FgpaVPF0mtSmVrpUrS5CC3LwWCzcYF833xGYbXOV4Kfg==}
+    dependencies:
+      '@near-js/crypto': 0.0.3
+      '@near-js/signers': 0.0.3
+      '@near-js/types': 0.0.3
+      '@near-js/utils': 0.0.3
+      bn.js: 5.2.1
+      borsh: 0.7.0
+      js-sha256: 0.9.0
+    dev: false
+
+  /@near-js/transactions/0.1.1:
+    resolution: {integrity: sha512-Fk83oLLFK7nz4thawpdv9bGyMVQ2i48iUtZEVYhuuuqevl17tSXMlhle9Me1ZbNyguJG/cWPdNybe1UMKpyGxA==}
+    dependencies:
+      '@near-js/crypto': 0.0.4
+      '@near-js/signers': 0.0.4
+      '@near-js/types': 0.0.4
+      '@near-js/utils': 0.0.4
+      bn.js: 5.2.1
+      borsh: 0.7.0
+      js-sha256: 0.9.0
+    dev: false
+
+  /@near-js/types/0.0.3:
+    resolution: {integrity: sha512-gC3iGUT+r2JjVsE31YharT+voat79ToMUMLCGozHjp/R/UW1M2z4hdpqTUoeWUBGBJuVc810gNTneHGx0jvzwQ==}
+    dependencies:
+      bn.js: 5.2.1
+    dev: false
+
+  /@near-js/types/0.0.4:
+    resolution: {integrity: sha512-8TTMbLMnmyG06R5YKWuS/qFG1tOA3/9lX4NgBqQPsvaWmDsa+D+QwOkrEHDegped0ZHQwcjAXjKML1S1TyGYKg==}
+    dependencies:
+      bn.js: 5.2.1
+    dev: false
+
+  /@near-js/utils/0.0.3:
+    resolution: {integrity: sha512-J72n/EL0VfLRRb4xNUF4rmVrdzMkcmkwJOhBZSTWz3PAZ8LqNeU9ZConPfMvEr6lwdaD33ZuVv70DN6IIjPr1A==}
+    dependencies:
+      '@near-js/types': 0.0.3
+      bn.js: 5.2.1
+      depd: 2.0.0
+      mustache: 4.2.0
+    dev: false
+
+  /@near-js/utils/0.0.4:
+    resolution: {integrity: sha512-mPUEPJbTCMicGitjEGvQqOe8AS7O4KkRCxqd0xuE/X6gXF1jz1pYMZn4lNUeUz2C84YnVSGLAM0o9zcN6Y4hiA==}
+    dependencies:
+      '@near-js/types': 0.0.4
+      bn.js: 5.2.1
+      depd: 2.0.0
+      mustache: 4.2.0
+    dev: false
+
   /@noble/ed25519/1.7.3:
     resolution: {integrity: sha512-iR8GBkDt0Q3GyaVcIu7mSsVIqnFbkbRzGLWlvhwunacoLwt4J3swfKhfaM6rN6WY+TBGoYT1GtT1mIh2/jGbRQ==}
+    dev: false
+
+  /@noble/hashes/1.1.2:
+    resolution: {integrity: sha512-KYRCASVTv6aeUi1tsF8/vpyR7zpfs3FUzy2Jqm+MU+LmUKhQ0y2FpfwqkCcxSg2ua4GALJd8k2R76WxwZGbQpA==}
     dev: false
 
   /@noble/hashes/1.1.3:
@@ -1214,6 +1378,19 @@ packages:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
+  /aptos/1.3.14:
+    resolution: {integrity: sha512-9AZ7fKgOwLoOITnw3nz2Nzon/HjKrHDU6n893S4MhsmHXK85R4NG4UyTyIczhWGWVdytJiPCkEZufhzsH4eZCw==}
+    engines: {node: '>=11.0.0'}
+    dependencies:
+      '@noble/hashes': 1.1.2
+      '@scure/bip39': 1.1.0
+      axios: 0.27.2
+      form-data: 4.0.0
+      tweetnacl: 1.0.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /aptos/1.8.4:
     resolution: {integrity: sha512-LWasWcz8+SMj4nCGQzB8kC0P/b2PRraUSjIQmeQH6jJ4O2WqS4MASzQZdk3vkG+i5O2dgLRgDK2QUZaxHqfydQ==}
     engines: {node: '>=11.0.0'}
@@ -1275,6 +1452,34 @@ packages:
       tmp-promise: 3.0.3
     transitivePeerDependencies:
       - '@solana/web3.js'
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /arbundles/0.9.6:
+    resolution: {integrity: sha512-YtNVHLJ99utKgwu7ss4N6A4tUHSitMho85DGLlHjlTMWlninL8QU6Cczjp8luOzG0ong3V3OQ3QsMHRe+GYrKw==}
+    dependencies:
+      '@ethersproject/bytes': 5.7.0
+      '@ethersproject/hash': 5.7.0
+      '@ethersproject/providers': 5.7.2
+      '@ethersproject/signing-key': 5.7.0
+      '@ethersproject/transactions': 5.7.0
+      '@ethersproject/wallet': 5.7.0
+      '@noble/ed25519': 1.7.3
+      arweave: 1.11.8
+      base64url: 3.0.1
+      bs58: 4.0.1
+      keccak: 3.0.3
+      secp256k1: 4.0.3
+    optionalDependencies:
+      '@randlabs/myalgo-connect': 1.4.2
+      algosdk: 1.24.1
+      arweave-stream-tx: 1.2.2_arweave@1.11.8
+      multistream: 4.1.0
+      tmp-promise: 3.0.3
+    transitivePeerDependencies:
       - bufferutil
       - debug
       - encoding
@@ -1444,6 +1649,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+  /base-x/4.0.0:
+    resolution: {integrity: sha512-FuwxlW4H5kh37X/oW59pwTzzTKRzfrrQwhmyspRM7swOEZcHtDZSCt45U6oKgtuFE+WYPblePMVIPR4RZrh/hw==}
+    dev: false
+
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: false
@@ -1581,6 +1790,12 @@ packages:
     resolution: {integrity: sha512-Ok3Wdf5vOIlBrgCvTq96gBkJw+JUEzdBgyaza5HLtPm7yTHkjRy8+JzNyHF7BHa0bNWOQIp3m5YF0nnFcOIKLw==}
     dependencies:
       base-x: 3.0.9
+    dev: false
+
+  /bs58/5.0.0:
+    resolution: {integrity: sha512-r+ihvQJvahgYT50JD05dyJNKlmmSlMoOGwn1lCcEzanPglg7TxYjioQUYehQ9mAR/+hOSd2jRc/Z2y5UxBymvQ==}
+    dependencies:
+      base-x: 4.0.0
     dev: false
 
   /buffer-crc32/0.2.13:
@@ -4382,11 +4597,11 @@ packages:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
     engines: {node: '>=8'}
 
-  /test-asset-sdk/0.0.30:
-    resolution: {integrity: sha512-s07ZlvXKD7ZBxHo+CbF7aceqTaikCDKjYSW02F7GVR60NRcRyOaWLclBuVsO799pzhCe3q6tdUxw1u74dOmnZg==}
+  /test-asset-sdk/0.0.31:
+    resolution: {integrity: sha512-+aZThCDDHCQI1m9yJP/gVx4MrjMQDSXk0BWgRhpouKyn0pOIM3ETae4m73iwVdafUJAF3v75VyjSSxtpAROmMQ==}
     engines: {node: '>=18'}
     dependencies:
-      '@bundlr-network/client': 0.9.11
+      '@bundlr-network/client': 0.11.1
       arbundles: 0.7.3
       arweave: 1.11.8
       crocks: 0.12.4
