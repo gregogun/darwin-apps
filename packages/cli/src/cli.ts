@@ -468,6 +468,9 @@ program
 
     let createErr = false;
 
+    // base id to create link between base version and wrapper
+    let baseId = '';
+
     if (confirmCreate) {
       let spinner: Ora = ora();
       let wrapperSpinner = ora();
@@ -493,6 +496,8 @@ program
           spinner
         )
           .then(async (res) => {
+            baseId = res.id;
+
             if (!spinner.isSpinning) {
               spinner.start();
             }
@@ -509,7 +514,7 @@ program
               await deployWrapper(
                 res.id,
                 options.wallet,
-                { title: options.title, description: options.description },
+                { title: options.title, description: options.description, baseId },
                 options.host,
                 options.debug
               )
