@@ -7,6 +7,7 @@ import { spawnSync } from 'child_process';
 interface AppInfo {
   title: string;
   description: string;
+  baseId: string;
 }
 
 const deployWrapper = async (
@@ -73,6 +74,8 @@ const deployWrapper = async (
       { name: 'Type', value: 'app-wrapper' },
       { name: 'Title', value: appInfo.title },
       { name: 'Description', value: appInfo.description },
+      { name: 'Base', value: appInfo.baseId },
+      { name: 'Published', value: Date.now().toString() },
     ];
 
     // deploy
