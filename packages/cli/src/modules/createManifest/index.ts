@@ -1,10 +1,10 @@
-import { Manifest } from "../../types";
-import fs from "fs";
-import Bundlr from "@bundlr-network/client";
-import { confirmation, formatBytes, print, sleep } from "../../utils";
-import { recursiveReadDir } from "./recursiveReadDir";
-import { recursiveUploadFiles } from "./recursiveUpload";
-import ora, { Ora } from "ora";
+import { Manifest } from '../../types';
+import fs from 'fs';
+import Bundlr from '@bundlr-network/client';
+import { confirmation, formatBytes, print, sleep } from '../../utils';
+import { recursiveReadDir } from './recursiveReadDir';
+import { recursiveUploadFiles } from './recursiveUpload';
+import ora, { Ora } from 'ora';
 
 export const createManifest = async (
   folder: string,
@@ -13,20 +13,16 @@ export const createManifest = async (
   host: string | undefined,
   debug: boolean
 ) => {
-  let keyfile = "";
+  let keyfile = '';
 
   try {
-    keyfile = JSON.parse(fs.readFileSync(wallet, "utf-8"));
+    keyfile = JSON.parse(fs.readFileSync(wallet, 'utf-8'));
   } catch (error) {
-    throw new Error("Invalid path to wallet address");
+    throw new Error('Invalid path to wallet address');
   }
 
   // init bundlr
-  const bundlr = new Bundlr(
-    host ? host : "https://node2.bundlr.network",
-    "arweave",
-    keyfile
-  );
+  const bundlr = new Bundlr(host ? host : 'https://node2.bundlr.network', 'arweave', keyfile);
 
   try {
     // get file names and sizes
@@ -39,7 +35,7 @@ export const createManifest = async (
 
     let spinner: Ora = ora();
     spinner.start();
-    spinner.text = "Calculating upload size and price...";
+    spinner.text = 'Calculating upload size and price...';
 
     await sleep();
 
@@ -53,14 +49,10 @@ export const createManifest = async (
       } files - cost = ${priceWinston} winston / ${priceAr.toFixed()} AR`
     ).then(async (confirm) => {
       if (confirm) {
-        console.log(files);
-
         spinner.start();
         spinner.text = `Uploading ${files.names.length} files...`;
         await recursiveUploadFiles(folder, manifest.paths, bundlr).then(() => {
-          spinner.succeed(
-            `${files.sizes.length} files uploaded successfully ✨`
-          );
+          spinner.succeed(`${files.sizes.length} files uploaded successfully ✨`);
         });
 
         // rename file names for manifest
@@ -73,7 +65,7 @@ export const createManifest = async (
 
         if (debug) {
           spinner.start();
-          spinner.text = "Creating backup manifest file...";
+          spinner.text = 'Creating backup manifest file...';
         }
 
         fs.writeFileSync(
@@ -85,7 +77,7 @@ export const createManifest = async (
           spinner.succeed(`Backup manifest file created.`);
         }
       } else {
-        throw new Error("Upload process cancelled");
+        throw new Error('Upload process cancelled');
       }
     });
   } catch (error) {
