@@ -8,6 +8,8 @@ interface AppInfo {
   title: string;
   description: string;
   baseId: string;
+  topics: string;
+  logo: string | undefined;
 }
 
 const deployWrapper = async (
@@ -74,9 +76,19 @@ const deployWrapper = async (
       { name: 'Type', value: 'app-wrapper' },
       { name: 'Title', value: appInfo.title },
       { name: 'Description', value: appInfo.description },
-      { name: 'Base', value: appInfo.baseId },
+      { name: 'Wrapper-For', value: appInfo.baseId },
+      { name: 'Logo', value: appInfo.logo || '' },
       { name: 'Published', value: Date.now().toString() },
     ];
+
+    const topicArray = appInfo.topics.split(',');
+
+    topicArray.forEach((topic) =>
+      tags.push({
+        name: `Topic:${topic}`,
+        value: topic,
+      })
+    );
 
     // deploy
     await bundlr
