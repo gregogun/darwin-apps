@@ -514,7 +514,12 @@ program
               await deployWrapper(
                 res.id,
                 options.wallet,
-                { title: options.title, description: options.description, baseId },
+                {
+                  title: options.title,
+                  description: options.description,
+                  baseId,
+                  topics: options.topics,
+                },
                 options.host,
                 options.debug
               )

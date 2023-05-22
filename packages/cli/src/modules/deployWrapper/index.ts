@@ -8,6 +8,7 @@ interface AppInfo {
   title: string;
   description: string;
   baseId: string;
+  topics: string;
 }
 
 const deployWrapper = async (
@@ -77,6 +78,15 @@ const deployWrapper = async (
       { name: 'Base', value: appInfo.baseId },
       { name: 'Published', value: Date.now().toString() },
     ];
+
+    const topicArray = appInfo.topics.split(',');
+
+    topicArray.forEach((topic) =>
+      tags.push({
+        name: `Topic:${topic}`,
+        value: topic,
+      })
+    );
 
     // deploy
     await bundlr
