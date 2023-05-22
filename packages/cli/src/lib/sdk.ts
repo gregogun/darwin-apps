@@ -24,6 +24,7 @@ export const createAsset = async (
   manifest: Manifest,
   parentId: string | undefined,
   host: string | undefined,
+  logo: string | undefined,
   debug: boolean,
   spinner: Ora
 ) => {
@@ -73,7 +74,10 @@ export const createAsset = async (
     data: JSON.stringify(manifest),
     meta: releaseNotes || '',
     contentType: 'application/x.arweave-manifest+json',
-    customTags: [{ name: 'Source-Code', value: sourceCode }],
+    customTags: [
+      { name: 'Source-Code', value: sourceCode },
+      { name: 'Logo', value: logo || '' },
+    ],
   });
 
   return result;

@@ -38,6 +38,7 @@ program
   )
   .option('--host <string>', 'Bundlr node hostname/URL (e.g. http://node2.bundlr.network)')
   .option('--topics <string>', 'A list of comma-seperated topics (e.g. react,todo,warp)')
+  .option('--logo <string>', 'The filename of the logo (e.g. vite.svg)')
   .option('--debug', 'Increase verbosity of logs and errors')
   .action(async (type: 'base' | 'fork', folder: string, options) => {
     if (type !== 'base' && type !== 'fork') {
@@ -492,6 +493,7 @@ program
           manifest,
           options.forks,
           options.host,
+          options.logo,
           options.debug,
           spinner
         )
@@ -519,6 +521,7 @@ program
                   description: options.description,
                   baseId,
                   topics: options.topics,
+                  logo: options.logo,
                 },
                 options.host,
                 options.debug
