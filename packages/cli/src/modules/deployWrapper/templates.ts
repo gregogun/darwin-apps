@@ -137,7 +137,7 @@ function keyPressHandler(event) {
   if (event.keyCode === 27) {
     // 27 is the code for the escape key
     clearTimeout(delayTimer); // cancel the delay
-    window.location.replace('https://g8way.io/JomdCqBvBJWq6MQeeTmEcfKBfxKvRm_VTHofEPUJZ0c/'); // navigate to the specified URL
+    window.location.replace('https://evolutionary.g8way.io/#/app?tx=' + txid); // navigate to the specified URL
   }
 }
 
