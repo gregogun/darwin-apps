@@ -6,9 +6,11 @@ importers:
     specifiers:
       '@changesets/cli': 2.26.1
       turbo: 1.4.7
+      typescript: 4.7.4
     dependencies:
       '@changesets/cli': 2.26.1
       turbo: 1.4.7
+      typescript: 4.7.4
 
   packages/app-wrapper:
     specifiers:
@@ -4963,7 +4965,6 @@ packages:
     resolution: {integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /u3/0.1.1:
     resolution: {integrity: sha512-+J5D5ir763y+Am/QY6hXNRlwljIeRMZMGs0cT6qqZVVzzT3X3nFPXVyPOFRMOR4kupB0T8JnCdpWdp6Q/iXn3w==}
