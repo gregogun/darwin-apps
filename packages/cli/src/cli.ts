@@ -522,11 +522,7 @@ program
             if (!spinner.isSpinning) {
               spinner.start();
             }
-            spinner.succeed(
-              chalk.green(
-                `You've successfully deployed your evolutionary app! 🚀 Transaction ID: ${res.id}`
-              )
-            );
+            spinner.succeed(chalk.green(`App deployment successful! 🚀 Transaction ID: ${res.id}`));
             print.log(`Visit your deployment at: https://g8way.io/${res.id}`);
 
             if (type === 'base') {
