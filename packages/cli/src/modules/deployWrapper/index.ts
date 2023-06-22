@@ -69,6 +69,19 @@ const deployWrapper = async (
     const updatedMain = updatedLines.join('\n');
     fs.writeFileSync(mainPath, updatedMain, 'utf-8');
 
+    const originalHtml = fs.readFileSync(indexPath, 'utf-8');
+    const htmlLines = originalHtml.split('\n');
+
+    const updatedHtmlLines = htmlLines.map((line) => {
+      if (line.includes('<title>App Wrapper</title>')) {
+        return `<title>${appInfo.title}</title>`;
+      }
+      return line;
+    });
+
+    const updatedHtml = updatedHtmlLines.join('\n');
+    fs.writeFileSync(indexPath, updatedHtml, 'utf-8');
+
     runCommandSync('pnpm build', { cwd: projectPath, debug });
 
     const tags = [
@@ -105,6 +118,8 @@ const deployWrapper = async (
         throw err;
       });
   } catch (error) {
+    // cleanup/remove generated directory
+    fs.rmSync(path.resolve(path.join(__dirname, 'app-wrapper')), { recursive: true });
     throw new Error(error as any);
   }
 
