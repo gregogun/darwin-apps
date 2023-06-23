@@ -1,12 +1,12 @@
 {
-  "name": "evoapps-cli",
+  "name": "darwin-cli",
   "version": "0.0.4",
   "description": "A CLI tool for creating Evolutionary Apps.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "bin": {
-    "evoapps": "./dist/index.js"
+    "darwin": "./dist/index.js"
   },
   "publishConfig": {
     "access": "public"

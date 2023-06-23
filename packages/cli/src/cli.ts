@@ -286,9 +286,17 @@ program
           message: 'Provide a path to your release notes.',
           type: 'input',
           required: true,
+          validate: (value) => {
+            try {
+              readFileSync(value, 'utf-8');
+              return true;
+            } catch (error: any) {
+              return 'Invalid path to release notes.';
+            }
+          },
         },
       ]).then((answers: any) => {
-        options.releaseNotes = answers.releaseNotes;
+        options.releaseNotes = readFileSync(answers.releaseNotes, 'utf-8');
       });
     }
 
@@ -315,6 +323,18 @@ program
         },
       ]).then((answers: any) => {
         options.index = answers.index;
+      });
+    }
+
+    if (!options.logo && !options.skipOptional) {
+      await prompt([
+        {
+          name: 'logo',
+          message: 'Optionally provide a logo for your project.',
+          type: 'input',
+        },
+      ]).then((answers: any) => {
+        options.logo = answers.logo;
       });
     }
 
@@ -368,7 +388,6 @@ program
 
     const confirmDeploy = await confirmation(
       'Do you already have a manifest file you would like to deploy?'
-      // { skip: options.skipOptional }
     );
 
     if (confirmDeploy) {
@@ -503,11 +522,7 @@ program
             if (!spinner.isSpinning) {
               spinner.start();
             }
-            spinner.succeed(
-              chalk.green(
-                `You've successfully deployed your evolutionary app! 🚀 Transaction ID: ${res.id}`
-              )
-            );
+            spinner.succeed(chalk.green(`App deployment successful! 🚀 Transaction ID: ${res.id}`));
             print.log(`Visit your deployment at: https://g8way.io/${res.id}`);
 
             if (type === 'base') {

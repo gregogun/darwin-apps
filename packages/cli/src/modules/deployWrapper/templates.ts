@@ -104,15 +104,63 @@ export const jsContent = `
 import graph from '@permaweb/asset-graph';
 import Stamps from '@permaweb/stampjs';
 import { WarpFactory, LoggerFactory } from 'warp-contracts';
+import Arweave from 'arweave'
+
+const arweave = Arweave.init({})
 
 const warp = WarpFactory.forMainnet();
 LoggerFactory.INST.logLevel('none');
 
 const stamps = Stamps.init({ warp });
 
-let delayTimer;
-
 let txid;
+
+let wrapperTx;
+
+async function getWrapperTx(txid) {
+  console.log('txid', txid)
+  const queryObj = {
+    query: \` query ($txid: String!) {
+            transactions(
+                tags: [
+                        { 
+                            name: "Content-Type", 
+                            values: ["application/x.arweave-manifest+json"]
+                        },
+                        { 
+                            name: "Data-Protocol", 
+                            values: ["Evoapps"]
+                        },
+                        {
+                            name: "Wrapper-For", 
+                            values: [$txid]
+                        }
+                ]
+            )
+            {
+			edges {
+				node {
+					id
+					tags {
+						name
+						value
+					}
+				}
+			}
+		}
+        }\`,
+        variables: {
+          txid: txid
+        }
+  };
+
+  const res = await arweave.api.post("/graphql", queryObj);
+  const metadata = res.data.data.transactions.edges.map((edge) => edge.node.id)
+  console.log('metadata', metadata)
+  const tx = metadata.reverse()[0]
+  console.log('tx', tx)
+  return tx;
+}
 
 async function calculateStamps(txid) {
   // use txid in getGraph function to get all versions
@@ -129,15 +177,20 @@ async function calculateStamps(txid) {
   const result = getKeyWithHighestVouched(counts);
   console.log('result', result);
   const target = result ? result : txid;
-  location.href = 'https://g8way.io/' + target;
-  // append to g8way.io url and use in replaceUrl method
+
+  setTimeout(() => {
+    location.href = 'https://g8way.io/' + target;
+  }, 1000); // delay for 1 second after computation
 }
 
 function keyPressHandler(event) {
   if (event.keyCode === 27) {
-    // 27 is the code for the escape key
-    clearTimeout(delayTimer); // cancel the delay
-    window.location.replace('https://evolutionary.g8way.io/#/app?tx=' + txid); // navigate to the specified URL
+    if (wrapperTx) {    
+      // 27 is the code for the escape key
+      window.location.replace('https://evolutionary.g8way.io/#/app?tx=' + wrapperTx + '&baseId=' + txid); // navigate to the specified URL
+    } else {
+      window.location.replace('https://evolutionary.g8way.io/'); // navigate to the specified URL
+    }
   }
 }
 
@@ -174,7 +227,16 @@ function getKeyWithHighestVouched(obj) {
     }
   }
 
-window.addEventListener('load', () => calculateStamps(txid));
+window.addEventListener('load', async () => {
+  console.log('load running...')
+  try {
+    const tx = await getWrapperTx(txid)
+    wrapperTx = tx;
+    await calculateStamps(txid)
+  } catch (error) {
+    console.error(error)
+  }
+}); 
 window.addEventListener('keydown', keyPressHandler);
 `;
 
@@ -193,6 +255,7 @@ export const packageJsonContent = `{
     "dependencies": {
       "@permaweb/asset-graph": "https://arweave.net/-jYaU7HYX3JNpsOTqkMzEKUK4_5Mfy-a88jtgSNrI_k",
       "@permaweb/stampjs": "0.0.15",
+      "arweave": "1.12.4",
       "warp-contracts": "1.2.39"
     },
     "devDependencies": {
