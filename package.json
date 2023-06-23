@@ -1,5 +1,5 @@
 {
-  "name": "evoapps-test-cli",
+  "name": "darwin-cli",
   "private": true,
   "version": "0.0.1",
   "packageManager": "pnpm@7.18.2",

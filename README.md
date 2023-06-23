@@ -17,16 +17,16 @@ Please note, you will also need an [Arweave wallet](https://arweave.app/) which 
 To get started with deployment, install the cli tool with the following command:
 
 ```jsx
-npm install -g evoapps-cli
+npm install -g darwin-cli
 ```
 
 To confirm installation, you can run the following command:
 
 ```jsx
-evoapps --version;
+darwin --version;
 ```
 
-Note: Command-line arguments are available for those that prefer this workflow. You can run `evoapps create -h` to see the list of options available to you.
+Note: Command-line arguments are available for those that prefer this workflow. You can run `darwin create -h` to see the list of options available to you.
 
 If you decide to omit any arguments, you will be prompted for answers on both required and optional parameters.
 
@@ -41,7 +41,7 @@ To deploy your project as an evolutionary app, you will need to run the `create`
 Run the following command:
 
 ```
-evoapps create base <folder name>
+darwin create base <folder name>
 ```
 
 Once you've added all the required information and confirmed your changes, two deployments will take place:
@@ -49,18 +49,18 @@ Once you've added all the required information and confirmed your changes, two d
 - The first deployment will upload your project to the permaweb as an Atomic Asset, with all the necessary tags.
 - The second deployment will upload a wrapper around your app which will act as a fully decentralized routing mechanism for all future versions of the app.
 
-Note: we automatically generate a manifest file for you so that should you encounter any errors between the deployment steps, you won't have to upload the individual files that make up the manifest all over again. The manifest file will be saved in your root folder under with the following name structure: `<build directory>-manifest.json`
+Note: we automatically generate a manifest file for you so that should you encounter any errors between the deployment steps, you won't have to upload the individual files that make up the manifest all over again. The manifest file will be saved in your root folder under with the following name structure: `<folder name>-manifest.json`
 
 ---
 
 ## Forking an existing version
 
-To deploy your project as a fork/remix of another application, you will need to run the `create` command again, this time followed by `fork` and then your build directory.
+To deploy your project as a fork of another application, you will need to run the `create` command again, this time followed by `fork` and then your build directory.
 
 Run the following command:
 
 ```
-evoapps create fork <folder name>
+darwin create fork <folder name>
 ```
 
 Once you've added all the required information and confirmed your changes, you should receive a transaction ID, as well as a link where you can view the app.
@@ -72,7 +72,7 @@ Once you've added all the required information and confirmed your changes, you s
 If you want to get information about a specific app version, just run the cli get command like so:
 
 ```
-evoapps get <transaction ID>
+darwin get <transaction ID>
 ```
 
 Note: you **must** enter your wallet address (for instanciating a warp instance under the hood) but please note that this action will **not** cost you.
