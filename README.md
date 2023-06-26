@@ -1,4 +1,4 @@
-# Evolutionary Apps CLI
+# Darwin CLI
 
 A CLI tool for creating Evolutionary Apps.
 
