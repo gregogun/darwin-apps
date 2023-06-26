@@ -1,5 +1,5 @@
 ---
-'darwin-cli': patch
+'darwin-apps': patch
 ---
 
 Update data protocol name
