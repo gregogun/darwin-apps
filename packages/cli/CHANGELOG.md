@@ -1,4 +1,4 @@
-# @evoapps/cli
+# darwin-apps
 
 ## 0.0.4
 
