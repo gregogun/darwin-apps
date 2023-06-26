@@ -1,15 +1,4 @@
-# @evoapps/cli
-
-## 0.0.5
-
-### Patch Changes
-
-- 7eb3365: Update data protocol name
-- 3b48dce: Fix incomplete query params in App Wrapper when pressing escape key.
-
-  Update App Wrapper title to reflect title of base version.
-
-  Update package and cli command name .
+# darwin-apps
 
 ## 0.0.4
 
