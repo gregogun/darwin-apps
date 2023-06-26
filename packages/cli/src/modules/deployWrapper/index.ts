@@ -85,7 +85,7 @@ const deployWrapper = async (
     runCommandSync('pnpm build', { cwd: projectPath, debug });
 
     const tags = [
-      { name: 'Data-Protocol', value: 'Evoapps' },
+      { name: 'Data-Protocol', value: 'EvolutionaryApps' },
       { name: 'Type', value: 'app-wrapper' },
       { name: 'Title', value: appInfo.title },
       { name: 'Description', value: appInfo.description },
