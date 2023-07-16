@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { prompt } from 'enquirer';
-import fs, { readdirSync, readFileSync } from 'fs';
+import { readdirSync, readFileSync } from 'fs';
 import ora, { Ora } from 'ora';
 import chalk from 'chalk';
 import { createAsset, getAsset } from './lib/sdk';
@@ -9,7 +9,6 @@ import { confirmation, print, sleep } from './utils';
 import { createManifest } from './modules/createManifest';
 import { deploySourceCode } from './modules/deploySourceCode';
 import deployWrapper from './modules/deployWrapper';
-// import arweaveGql from 'arweave-graphql';
 
 const program = new Command();
 
