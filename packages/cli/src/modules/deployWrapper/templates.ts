@@ -111,7 +111,10 @@ const arweave = Arweave.init({})
 const warp = WarpFactory.forMainnet();
 LoggerFactory.INST.logLevel('none');
 
-const stamps = Stamps.init({ warp });
+const stamps = Stamps.init({
+  warp,
+  arweave
+});
 
 let txid;
 
@@ -129,7 +132,7 @@ async function getWrapperTx(txid) {
                         },
                         { 
                             name: "Data-Protocol", 
-                            values: ["Evoapps"]
+                            values: ["EvolutionaryApps"]
                         },
                         {
                             name: "Wrapper-For", 
@@ -172,9 +175,9 @@ async function calculateStamps(txid) {
   console.log('ids', ids);
   // pass array of tx's to stamp function
   const counts = await stamps.counts(ids);
-  console.log('counts', ids);
+  console.log('counts', counts);
   // calculate most stamped
-  const result = getKeyWithHighestVouched(counts);
+  const result = getKeyWithHighestVouched(counts, txid);
   console.log('result', result);
   const target = result ? result : txid;
 
@@ -187,9 +190,9 @@ function keyPressHandler(event) {
   if (event.keyCode === 27) {
     if (wrapperTx) {    
       // 27 is the code for the escape key
-      window.location.replace('https://evolutionary.g8way.io/#/app?tx=' + wrapperTx + '&baseId=' + txid); // navigate to the specified URL
+      window.location.replace('https://darwin.g8way.io/#/app?tx=' + wrapperTx + '&baseId=' + txid); // navigate to the specified URL
     } else {
-      window.location.replace('https://evolutionary.g8way.io/'); // navigate to the specified URL
+      window.location.replace('https://darwin.g8way.io/'); // navigate to the specified URL
     }
   }
 }
@@ -209,23 +212,21 @@ function flattenTree(tree) {
   return result;
 }
 
-function getKeyWithHighestVouched(obj) {
-    const keys = Object.keys(obj);
-    const vouchedArr = keys.map((key) => obj[key].vouched);
-    const sortedArr = vouchedArr.sort((a, b) => b - a);
-    const highestVouched = sortedArr[0];
-  
-    // If the highest vouched value is 0, return the first key in the object.
-    if (highestVouched === 0) {
-      return keys[0];
-    }
-  
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key) && obj[key].vouched === highestVouched) {
-        return key;
-      }
+function getKeyWithHighestVouched(obj, txid) {
+  if (Object.keys(obj).length === 0) {
+    return txid;
+  }
+  const keys = Object.keys(obj);
+  const vouchedArr = keys.map((key) => obj[key].vouched);
+  const sortedArr = vouchedArr.sort((a, b) => b - a);
+  const highestVouched = sortedArr[0];
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key) && obj[key].vouched === highestVouched) {
+      return key;
     }
   }
+}
 
 window.addEventListener('load', async () => {
   console.log('load running...')
@@ -254,12 +255,12 @@ export const packageJsonContent = `{
     },
     "dependencies": {
       "@permaweb/asset-graph": "https://arweave.net/-jYaU7HYX3JNpsOTqkMzEKUK4_5Mfy-a88jtgSNrI_k",
-      "@permaweb/stampjs": "0.0.15",
-      "arweave": "1.12.4",
-      "warp-contracts": "1.2.39"
+      "@permaweb/stampjs": "0.2.2",
+      "arweave": "1.13.7",
+      "warp-contracts": "1.4.8"
     },
     "devDependencies": {
-      "vite": "^4.3.2"
+      "vite": "4.3.2"
     },
     "homepage": "."
   }`;

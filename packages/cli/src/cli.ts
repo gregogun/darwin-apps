@@ -9,12 +9,13 @@ import { confirmation, print, sleep } from './utils';
 import { createManifest } from './modules/createManifest';
 import { deploySourceCode } from './modules/deploySourceCode';
 import deployWrapper from './modules/deployWrapper';
+// import arweaveGql from 'arweave-graphql';
 
 const program = new Command();
 
 program
   .description('A tool for creating and retrieving information about an Evolutionary App')
-  .version('0.0.4', '-v, --version', 'Gets the current version number of the cli');
+  .version('0.0.6', '-v, --version', 'Gets the current version number of the cli');
 
 program
   .command('create <type> <folder>')
@@ -211,18 +212,48 @@ program
         {
           name: 'groupId',
           message: 'Provide an optional groupId for your app',
+          //@ts-ignore
           type: 'input',
-          validate: (value: string) => {
-            if (value.length < 2) {
+          //@ts-ignore
+          validate: async (value: string) => {
+            if (value && value.length < 2) {
               return 'Group ID is too short';
             }
             if (value.length > 80) {
               return 'Group ID is too long';
             }
-            return true;
+            try {
+              const res = await (await import('arweave-graphql'))
+                .default(`https://arweave.net/graphql`)
+                .getTransactions({
+                  tags: [
+                    {
+                      name: 'Content-Type',
+                      values: ['application/x.arweave-manifest+json'],
+                    },
+                    {
+                      name: 'Type',
+                      values: ['app'],
+                    },
+                    {
+                      name: 'Group-Id',
+                      values: [value],
+                    },
+                  ],
+                });
+              const data = res.transactions.edges.map((edge) => edge.node.id);
+              if (data.length > 0) {
+                // print.error('Group ID already used by another app.');
+                return 'Group ID already used by another app.';
+              } else {
+                return true;
+              }
+            } catch (error) {
+              return 'Error occured whilst fetching data. Please try again.';
+            }
           },
         },
-      ]).then((answers: any) => {
+      ]).then(async (answers: any) => {
         options.groupId = answers.groupId;
       });
     }

@@ -28,6 +28,7 @@
     "@permaweb/stampjs": "0.0.15",
     "adm-zip": "0.5.10",
     "arweave": "1.11.8",
+    "arweave-graphql": "0.0.5",
     "chalk": "4.1.2",
     "commander": "10.0.1",
     "enquirer": "2.3.6",
