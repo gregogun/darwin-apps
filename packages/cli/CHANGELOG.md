@@ -1,5 +1,15 @@
 # darwin-apps
 
+## 0.0.6
+
+### Patch Changes
+
+- cdb4be6: Fix logic in function that calculates stamps across versions.
+
+  Update Data Protocol in query to find wrapper txid.
+
+  Make Group ID optional prompt and check if already in use.
+
 ## 0.0.5
 
 ### Patch Changes
