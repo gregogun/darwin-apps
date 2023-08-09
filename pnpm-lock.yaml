@@ -43,7 +43,7 @@ importers:
       figlet: 1.6.0
       mime-types: 2.1.35
       ora: 5.4.0
-      test-asset-sdk: 0.0.31
+      test-asset-sdk: 0.0.32
       ts-node: 10.9.1
       tsup: 6.7.0
       typescript: 4.7.4
@@ -64,7 +64,7 @@ importers:
       figlet: 1.6.0
       mime-types: 2.1.35
       ora: 5.4.0
-      test-asset-sdk: 0.0.31
+      test-asset-sdk: 0.0.32
       validator: 13.9.0
       vite: 4.3.2_@types+node@18.16.0
       warp-contracts: 1.2.39
@@ -4658,13 +4658,13 @@ packages:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
     engines: {node: '>=8'}
 
-  /test-asset-sdk/0.0.31:
-    resolution: {integrity: sha512-+aZThCDDHCQI1m9yJP/gVx4MrjMQDSXk0BWgRhpouKyn0pOIM3ETae4m73iwVdafUJAF3v75VyjSSxtpAROmMQ==}
+  /test-asset-sdk/0.0.32:
+    resolution: {integrity: sha512-jLk4mZuVHeurl+cxseSFFD+6nzBvkmz0fmNskHaNTZs3BNOVheoJpGdcoZTwnquoGfE6OzkrBAuIxH7K8skinQ==}
     engines: {node: '>=18'}
     dependencies:
       '@bundlr-network/client': 0.11.1
       arbundles: 0.7.3
-      arweave: 1.11.8
+      arweave: 1.12.4
       crocks: 0.12.4
       fpjson-lang: 0.1.3
       node-fetch: 3.3.1
