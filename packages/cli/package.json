@@ -35,7 +35,7 @@
     "figlet": "1.6.0",
     "mime-types": "2.1.35",
     "ora": "5.4.0",
-    "test-asset-sdk": "0.0.31",
+    "test-asset-sdk": "0.0.32",
     "validator": "13.9.0",
     "vite": "^4.3.2",
     "warp-contracts": "1.2.39"
