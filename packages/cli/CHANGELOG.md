@@ -1,5 +1,11 @@
 # darwin-apps
 
+## 0.0.7
+
+### Patch Changes
+
+- 8f72a98: Update Asset SDK to enable ucm compatible assets
+
 ## 0.0.6
 
 ### Patch Changes
